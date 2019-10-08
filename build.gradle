@@ -20,11 +20,14 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+println "printing project build directory"
+println project.buildDir
+
 apply plugin: 'findbugs'
 findbugs {
     ignoreFailures = false
     toolVersion = "3.0.1"
-    reportsDir = file("$System.DefaultWorkingDirectory/build/reports/findbugs")
+    reportsDir = file("$project.buildDir/reports/findbugs")
     effort = "max"
 }
 tasks.withType(FindBugs) {
