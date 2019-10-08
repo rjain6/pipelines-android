@@ -20,10 +20,13 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-plugins {
-    id 'findbugs'
+apply plugin: 'findbugs'
+findbugs {
+    ignoreFailures = false
+    toolVersion = "3.0.1"
+    reportsDir = file("$project.buildDir/reports/findbugs")
+    effort = "max"
 }
-
 tasks.withType(FindBugs) {
     reports {
         xml.enabled false
