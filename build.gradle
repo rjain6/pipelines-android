@@ -24,7 +24,7 @@ apply plugin: 'findbugs'
 findbugs {
     ignoreFailures = false
     toolVersion = "3.0.1"
-    reportsDir = file("$project.buildDir/reports/findbugs")
+    reportsDir = file("$System.DefaultWorkingDirectory/build/reports/findbugs")
     effort = "max"
 }
 tasks.withType(FindBugs) {
