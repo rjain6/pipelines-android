@@ -30,9 +30,9 @@ steps:
   
 - task: CopyFiles@2
   inputs:
-    contents: '**/*.html'
+    contents: '**/*.*'
     targetFolder: '$(build.artifactStagingDirectory)'
-  displayName: Copy html files to artifact staging directory
+  displayName: Copy everything to artifact staging directory
 
 - task: PublishBuildArtifacts@1
   inputs:
