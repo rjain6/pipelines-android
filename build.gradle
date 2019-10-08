@@ -23,6 +23,9 @@ task clean(type: Delete) {
 println "printing project build directory"
 println project.buildDir
 
+println "printing source set"
+println sourceSets.main
+
 apply plugin: "findbugs"
 
 findbugs {
