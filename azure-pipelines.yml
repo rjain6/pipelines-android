@@ -18,6 +18,7 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
     tasks: 'assembleDebug test'
+    findBugsRunAnalysis: true
   displayName: gradlew assembleDebug test
 
 - task: CopyFiles@2
