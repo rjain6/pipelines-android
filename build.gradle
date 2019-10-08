@@ -23,9 +23,6 @@ task clean(type: Delete) {
 println "printing project build directory"
 println project.buildDir
 
-apply plugin: "java"
-apply plugin: "findbugs"
-
 findbugs {
     toolVersion = "3.0.1"
     sourceSets = [sourceSets.main]
