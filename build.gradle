@@ -20,6 +20,13 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
+
 // Define versions in a single place
 ext {
     // Sdk and tools
