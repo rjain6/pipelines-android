@@ -23,13 +23,19 @@ task clean(type: Delete) {
 println "printing project build directory"
 println project.buildDir
 
-apply plugin: 'findbugs'
+apply plugin: "java"
+apply plugin: "findbugs"
+
 findbugs {
-    ignoreFailures = false
     toolVersion = "3.0.1"
-    reportsDir = file("$project.buildDir/reports/findbugs")
+    sourceSets = [sourceSets.main]
+    ignoreFailures = true
+    reportsDir = file("$project.buildDir/findbugsReports")
     effort = "max"
+    showProgress = true
+    reportLevel = "low"
 }
+
 tasks.withType(FindBugs) {
     reports {
         xml.enabled false
