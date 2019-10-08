@@ -26,44 +26,24 @@ println project.buildDir
 println "printing project directory absolute path"
 println projectDir.absolutePath
 
-apply plugin: 'findbugs'
-def isJava = plugins.hasPlugin('java')
-
-println "isJava"
-println isJava
+apply plugin: "findbugs"
 
 findbugs {
     toolVersion = "3.0.1"
-    ignoreFailures = false
+    sourceSets = [sourceSets.main]
+    ignoreFailures = true
+    reportsDir = file("$projectDir.absolutePath/app/build/reports/findbugs")
     effort = "max"
+    showProgress = true
     reportLevel = "low"
 }
 
-task findbugs(type: FindBugs, dependsOn: "assemble", group: 'verification') {
-    if (isJava) {
-        classes = files("$projectDir.absolutePath/build/classes")
-    } else {
-        classes = files("$projectDir.absolutePath/build/intermediates/classes")
-    }
-    source 'src'
-    include '**/*.java'
-    exclude '**/gen/**'
-
+tasks.withType(FindBugs) {
     reports {
-        // FindBugs tasks can only have one report enabled
-        xml.enabled = false
-        html.enabled = !xml.enabled
-        xml {
-            destination file("$projectDir.absolutePath/build/reports/findbugs/findbugs.xml")
-        }
-        html {
-            destination file("$projectDir.absolutePath/build/reports/findbugs/findbugs.html")
-        }
+        xml.enabled true
+        html.enabled false
     }
-
-    classpath = files()
 }
-
 
 
 // Define versions in a single place
