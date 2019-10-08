@@ -23,27 +23,42 @@ task clean(type: Delete) {
 println "printing project build directory"
 println project.buildDir
 
-println "printing source set"
-println sourceSets.main
-
-apply plugin: "findbugs"
+println "printing project directory absolute path"
+println projectDir.absolutePath
 
 findbugs {
     toolVersion = "3.0.1"
-    sourceSets = [sourceSets.main]
-    ignoreFailures = true
-    reportsDir = file("$project.buildDir/reports/findbugs")
+    ignoreFailures = false
     effort = "max"
-    showProgress = true
     reportLevel = "low"
 }
 
-tasks.withType(FindBugs) {
-    reports {
-        xml.enabled false
-        html.enabled true
+task findbugs(type: FindBugs, dependsOn: "assemble", group: 'verification') {
+    if (isJava) {
+        classes = files("$projectDir.absolutePath/build/classes")
+    } else {
+        classes = files("$projectDir.absolutePath/build/intermediates/classes")
     }
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reports {
+        // FindBugs tasks can only have one report enabled
+        xml.enabled = false
+        html.enabled = !xml.enabled
+        xml {
+            destination file("$projectDir.absolutePath/build/reports/findbugs/findbugs.xml")
+        }
+        html {
+            destination file("$projectDir.absolutePath/build/reports/findbugs/findbugs.html")
+        }
+    }
+
+    classpath = files()
 }
+
+
 
 // Define versions in a single place
 ext {
