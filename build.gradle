@@ -26,6 +26,12 @@ println project.buildDir
 println "printing project directory absolute path"
 println projectDir.absolutePath
 
+apply plugin: 'findbugs'
+def isJava = plugins.hasPlugin('java')
+
+println "isJava"
+println isJava
+
 findbugs {
     toolVersion = "3.0.1"
     ignoreFailures = false
