@@ -20,6 +20,10 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+plugins {
+    id 'findbugs'
+}
+
 tasks.withType(FindBugs) {
     reports {
         xml.enabled false
