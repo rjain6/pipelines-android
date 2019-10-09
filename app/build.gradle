@@ -65,25 +65,22 @@ println projectDir.absolutePath
 
 apply plugin: 'findbugs'
 
-task customFindbugs(type: FindBugs) {
-    ignoreFailures = false
+findbugs {
+    toolVersion = "3.0.1"
+    sourceSets = [sourceSets.main]
+    ignoreFailures = true
+    reportsDir = file("$projectDir.absolutePath/app/build/reports/findbugs")
     effort = "max"
+    showProgress = true
     reportLevel = "low"
-    classes = files("$project.buildDir/intermediates/classes")
-
-    source = fileTree('src/main/java/')
-    classpath = files()
-
-    reports {
-        xml.enabled = false
-        xml.withMessages = true
-        html.enabled = !xml.isEnabled()
-        xml.destination "$project.buildDir/outputs/findbugs/findbugs-output.xml"
-        html.destination "$project.buildDir/outputs/findbugs/findbugs-output.html"
-    }
 }
 
-build.dependsOn customFindbugs
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
+}
 
 /*
  Dependency versions are defined in the top level build.gradle file. This helps keeping track of
