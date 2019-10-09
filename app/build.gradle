@@ -69,7 +69,7 @@ findbugs {
     toolVersion = "3.0.1"
     sourceSets = [sourceSets.main]
     ignoreFailures = true
-    reportsDir = file("$projectDir.absolutePath/app/build/reports/findbugs")
+    reportsDir = file("$project.buildDir/reports/findbugs")
     effort = "max"
     showProgress = true
     reportLevel = "low"
