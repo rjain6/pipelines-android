@@ -28,22 +28,27 @@ println projectDir.absolutePath
 
 apply plugin: "findbugs"
 
-findbugs {
-    toolVersion = "3.0.1"
-    sourceSets = [sourceSets.main]
-    ignoreFailures = true
-    reportsDir = file("$projectDir.absolutePath/app/build/reports/findbugs")
-    effort = "max"
-    showProgress = true
-    reportLevel = "low"
-}
+apply plugin: 'findbugs'
 
-tasks.withType(FindBugs) {
+task customFindbugs(type: FindBugs) {
+    ignoreFailures = false
+    effort = "max"
+    reportLevel = "low"
+    classes = files("$project.buildDir/intermediates/classes")
+
+    source = fileTree('src/main/java/')
+    classpath = files()
+
     reports {
-        xml.enabled true
-        html.enabled false
+        xml.enabled = false
+        xml.withMessages = true
+        html.enabled = !xml.isEnabled()
+        xml.destination "$project.buildDir/outputs/findbugs/findbugs-output.xml"
+        html.destination "$project.buildDir/outputs/findbugs/findbugs-output.html"
     }
 }
+
+build.dependsOn customFindbugs
 
 
 // Define versions in a single place
